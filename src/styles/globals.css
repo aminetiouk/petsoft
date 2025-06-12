@@ -6,10 +6,11 @@
 
 @theme inline {
   --font-raleway: 'Raleway', sans-serif;
-  --color-almond: hsla(31, 66%, 87%, 1);
-  --color-lion: hsla(33, 40%, 55%, 1);
-  --color-tea-rose-red: hsla(0, 73%, 85%, 1);
-  --color-tigers-eye: hsla(31, 81%, 38%, 1);
+  --color-falu-red: hsla(1, 61%, 27%, 1);
+  --color-lion: hsla(37, 42%, 54%, 1);
+  --color-bistre: hsla(22, 47%, 18%, 1);
+  --color-brown: hsla(25, 57%, 38%, 1);
+  --color-peach: hsla(43, 100%, 83%, 1);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
