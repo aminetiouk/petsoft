@@ -1,18 +1,25 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import Logo from './logo';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const routes = [
   {
     label: 'Dashboard',
-    path: '/account'
+    path: '/app/dashboard'
   },
   {
     label: 'Account',
-    path: '/dashboard'
+    path: '/app/account'
   }
 ];
 
 export default function AppHeader() {
+  const activePathname = usePathname();
+  console.log(activePathname);
+
   return (
     <header className="flex justify-between items-center py-4 border-b border-falu-red/20">
       <Link href="/">
@@ -24,7 +31,12 @@ export default function AppHeader() {
             <li key={route.path}>
               <Link
                 href={route.path}
-                className="block bg-brown/90 py-2 px-4 rounded-full text-peach tracking-wider hover:text-white focus:text-white transition hover:bg-falu-red"
+                className={cn(
+                  'py-2 px-4 rounded-full text-black/70 tracking-wider hover:text-white hover:bg-brown focus:text-white transition',
+                  {
+                    'bg-brown/90 text-white': route.path === activePathname
+                  }
+                )}
               >
                 {route.label}
               </Link>
