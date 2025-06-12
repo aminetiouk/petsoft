@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Logo from '@/components/logo';
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
         alt="screenshot of the software"
       />
       <div>
-        <Image src="/logo.svg" width={50} height={50} alt="PetSoft logo" />
+        <Logo width={35} />
         <h1 className="text-5xl font-semibold my-6 max-w-[500px]">
           Manage your <span className="font-extrabold">pet daycare</span> with
           ease
