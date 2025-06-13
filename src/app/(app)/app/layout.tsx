@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: string }) {
     <main>
       <BackgroundHeader />
 
-      <div className="max-w-[1050px] mx-auto px-10">
+      <div className="flex flex-col min-h-screen max-w-[1050px] mx-auto px-10">
         <AppHeader />
         {children}
         <AppFooter />
