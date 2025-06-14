@@ -5,24 +5,24 @@ import PetList from '@/components/pet-list';
 import SearchForm from '@/components/search-form';
 import Stats from '@/components/stats';
 
-export default function Dashboard() {
+export default async function Page() {
   return (
-    <main>
-      <div className="flex justify-between items-center py-8 text-black/70">
+    <main className='py-8'>
+      <div className="flex justify-between items-center pb-8  text-black/70">
         <Branding />
 
         <Stats />
       </div>
-      <div className="grid grid-cols-3 grid-rows-[45px_1fr] gap-4 h-[600px]">
-        <div className="row-span-1 row-start-1 col-span-1 col-start-1">
+      <div className="grid md:grid-cols-3 grid-rows-[45px_300px_400px] md:grid-rows-[45px_1fr] gap-4 md:h-[600px]">
+        <div className="md:row-span-1 md:row-start-1 md:col-span-1 md:col-start-1">
           <SearchForm />
         </div>
-        <div className='row-start-2 row-span-full col-span-1 col-start-1'>
+        <div className='md:row-start-2 md:row-span-full md:col-span-1 md:col-start-1'>
           <ContentBlock>
             <PetList />
           </ContentBlock>
         </div>
-        <div className='col-span-full col-start-2 row-start-1 row-span-full'>
+        <div className='md:col-span-full md:col-start-2 md:row-start-1 md:row-span-full'>
           <ContentBlock>
             <PetDetails />
           </ContentBlock>
