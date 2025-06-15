@@ -1,5 +1,5 @@
 export type TPets = {
-  id: number,
+  id: string,
   name: string,
   ownerName: string,
   imageUrl: string,
