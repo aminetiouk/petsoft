@@ -1,4 +1,4 @@
-export type pets = {
+export type TPets = {
   id: number,
   name: string,
   ownerName: string,
