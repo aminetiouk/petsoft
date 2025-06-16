@@ -2,12 +2,13 @@ import Branding from '@/components/branding';
 import ContentBlock from '@/components/content-block';
 import PetDetails from '@/components/pet-details';
 import PetList from '@/components/pet-list';
+import PetButton from '@/components/petButton';
 import SearchForm from '@/components/search-form';
 import Stats from '@/components/stats';
 
 export default function Page() {
   return (
-    <main className='py-8'>
+    <main className="py-8">
       <div className="flex justify-between items-center pb-8  text-black/70">
         <Branding />
 
@@ -17,12 +18,15 @@ export default function Page() {
         <div className="md:row-span-1 md:row-start-1 md:col-span-1 md:col-start-1">
           <SearchForm />
         </div>
-        <div className='md:row-start-2 md:row-span-full md:col-span-1 md:col-start-1'>
+        <div className="relative md:row-start-2 md:row-span-full md:col-span-1 md:col-start-1">
           <ContentBlock>
             <PetList />
+            <div className='absolute right-5 bottom-5 '>
+              <PetButton actionType="icon" />
+            </div>
           </ContentBlock>
         </div>
-        <div className='md:col-span-full md:col-start-2 md:row-start-1 md:row-span-full'>
+        <div className="md:col-span-full md:col-start-2 md:row-start-1 md:row-span-full">
           <ContentBlock>
             <PetDetails />
           </ContentBlock>
