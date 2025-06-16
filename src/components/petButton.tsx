@@ -4,9 +4,10 @@ import Image from 'next/image';
 type TPetButton = {
   actionType: 'icon' | 'edit' | 'checkout';
   children?: React.ReactNode;
+  onClick?: () => void;
 };
 
-export default function PetButton({ actionType, children }: TPetButton) {
+export default function PetButton({ actionType, children, onClick }: TPetButton) {
   if (actionType === 'icon') {
     return (
       <Button size="icon">
@@ -18,6 +19,6 @@ export default function PetButton({ actionType, children }: TPetButton) {
     return <Button variant="secondary">{children}</Button>;
   }
   if (actionType === 'checkout') {
-    return <Button variant="secondary">{children}</Button>;
+    return <Button variant="secondary" onClick={onClick}>{children}</Button>;
   }
 }

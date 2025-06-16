@@ -28,13 +28,14 @@ type TProps = {
 
 const EmptyView = () => {
   return (
-    <section className='flex items-center h-full justify-center'>
+    <section className="flex items-center h-full justify-center">
       <p className="font-semibold text-3xl text-black/20">Not pet selected</p>
     </section>
   );
 };
 
 const TopBar = ({ pet }: TProps) => {
+  const { handleCheckoutPet } = usePetContext();
   return (
     <div className="flex items-center px-8 py-5 bg-white border-b border-black/10 ">
       <Image
@@ -45,9 +46,14 @@ const TopBar = ({ pet }: TProps) => {
         className="rounded-full object-cover w-[75] h-[75]"
       />
       <h2 className="text-3xl font-semibold leading-5 ml-4">{pet?.name}</h2>
-      <div className='ml-auto space-x-4'>
+      <div className="ml-auto space-x-4">
         <PetButton actionType="edit">Edit</PetButton>
-        <PetButton actionType="checkout">Checkout</PetButton>
+        <PetButton
+          actionType="checkout"
+          onClick={() => handleCheckoutPet(pet.id)}
+        >
+          Checkout
+        </PetButton>
       </div>
     </div>
   );
