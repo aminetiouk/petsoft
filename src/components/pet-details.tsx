@@ -3,6 +3,7 @@
 import { usePetContext } from '@/lib/hooks';
 import { TPets } from '@/lib/types';
 import Image from 'next/image';
+import PetButton from './petButton';
 
 export default function PetDetails() {
   const { selectedPet } = usePetContext();
@@ -44,6 +45,10 @@ const TopBar = ({ pet }: TProps) => {
         className="rounded-full object-cover w-[75] h-[75]"
       />
       <h2 className="text-3xl font-semibold leading-5 ml-4">{pet?.name}</h2>
+      <div className='ml-auto space-x-4'>
+        <PetButton actionType="edit">Edit</PetButton>
+        <PetButton actionType="checkout">Checkout</PetButton>
+      </div>
     </div>
   );
 };
