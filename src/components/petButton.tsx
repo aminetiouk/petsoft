@@ -7,11 +7,21 @@ type TPetButton = {
   onClick?: () => void;
 };
 
-export default function PetButton({ actionType, children, onClick }: TPetButton) {
+export default function PetButton({
+  actionType,
+  children,
+  onClick
+}: TPetButton) {
   if (actionType === 'icon') {
     return (
       <Button size="icon">
-        <Image src="/plus.svg" width={15} height={15} alt="plus icon" className='w-6 h-6' />
+        <Image
+          src="/plus.svg"
+          width={15}
+          height={15}
+          alt="plus icon"
+          className="w-6 h-6"
+        />
       </Button>
     );
   }
@@ -19,6 +29,10 @@ export default function PetButton({ actionType, children, onClick }: TPetButton)
     return <Button variant="secondary">{children}</Button>;
   }
   if (actionType === 'checkout') {
-    return <Button variant="secondary" onClick={onClick}>{children}</Button>;
+    return (
+      <Button variant="secondary" onClick={onClick}>
+        {children}
+      </Button>
+    );
   }
 }
