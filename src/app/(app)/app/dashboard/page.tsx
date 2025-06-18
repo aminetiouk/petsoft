@@ -22,7 +22,7 @@ export default function Page() {
           <ContentBlock>
             <PetList />
             <div className='absolute right-5 bottom-5'>
-              <PetButton actionType="icon" />
+              <PetButton actionType="add" />
             </div>
           </ContentBlock>
         </div>
