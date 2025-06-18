@@ -38,7 +38,7 @@ export default function PetButton({
               width={15}
               height={15}
               alt="plus icon"
-              className="w-6 h-6"
+              className="w-5 h-5"
             />
           </Button>
         ) : (
