@@ -11,8 +11,11 @@ type TPetFormProps = {
   onFormSubmission: () => void;
 };
 
-export default function PetForm({ actionType, onFormSubmission }: TPetFormProps) {
-  const { handleAddNewPet } = usePetContext();
+export default function PetForm({
+  actionType,
+  onFormSubmission
+}: TPetFormProps) {
+  const { handleAddNewPet, selectedPet } = usePetContext();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,23 +37,52 @@ export default function PetForm({ actionType, onFormSubmission }: TPetFormProps)
       <div className="space-y-3">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
-          <Input id="name" name="name" type="text" required />
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            required
+            defaultValue={actionType === 'edit' ? selectedPet?.name : ''}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="ownerName">Owner Name</Label>
-          <Input id="ownerName" name="ownerName" type="text" required />
+          <Input
+            id="ownerName"
+            name="ownerName"
+            type="text"
+            required
+            defaultValue={actionType === 'edit' ? selectedPet?.ownerName : ''}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="imageUrl">Image Url</Label>
-          <Input id="imageUrl" name="imageUrl" type="text" />
+          <Input
+            id="imageUrl"
+            name="imageUrl"
+            type="text"
+            defaultValue={actionType === 'edit' ? selectedPet?.imageUrl : ''}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="age">Age</Label>
-          <Input id="age" name="age" type="number" required />
+          <Input
+            id="age"
+            name="age"
+            type="number"
+            required
+            defaultValue={actionType === 'edit' ? selectedPet?.age : ''}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="notes">Notes</Label>
-          <Textarea id="notes" name="notes" rows={3} required />
+          <Textarea
+            id="notes"
+            name="notes"
+            rows={3}
+            required
+            defaultValue={actionType === 'edit' ? selectedPet?.notes : ''}
+          />
         </div>
       </div>
       <Button type="submit" className="mt-5 self-end">
