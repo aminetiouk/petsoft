@@ -1,8 +1,8 @@
 import AppFooter from '@/components/app-footer';
 import AppHeader from '@/components/app-header';
 import BackgroundHeader from '@/components/background-header';
-import PetContextProvider from '@/components/contexts/pet-context-provider';
-import SearchContextProvider from '@/components/contexts/search-context-provider';
+import PetContextProvider from '@/contexts/pet-context-provider';
+import SearchContextProvider from '@/contexts/search-context-provider';
 import prisma from '@/lib/prisma';
 
 export default async function Layout({ children }: { children: string }) {

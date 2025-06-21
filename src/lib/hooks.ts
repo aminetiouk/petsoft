@@ -1,5 +1,5 @@
-import { petContext } from "@/components/contexts/pet-context-provider";
-import { searchContext } from "@/components/contexts/search-context-provider";
+import { petContext } from "@/contexts/pet-context-provider";
+import { searchContext } from "@/contexts/search-context-provider";
 import { useContext } from "react";
 
 export function usePetContext() {
