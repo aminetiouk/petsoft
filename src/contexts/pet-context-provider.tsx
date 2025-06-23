@@ -31,7 +31,7 @@ export default function PetContextProvider({
   const numberOfPets = pets.length;
 
   const handleCheckoutPet = (id: string) => {
-    setPets(prev => prev.filter(pet => pet.id !== id));
+    pets.filter(pet => pet.id !== id);
   };
 
   const handleAddNewPet = async (newPet: Omit<TPets, 'id'>) => {
