@@ -8,6 +8,7 @@ import prisma from '@/lib/prisma';
 export default async function Layout({ children }: { children: string }) {
   
   const pets = await prisma.pet.findMany();
+  console.log('rendering...')
   return (
     <main>
       <BackgroundHeader />
