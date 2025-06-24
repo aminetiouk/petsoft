@@ -12,9 +12,7 @@ type TPetFormProps = {
   onFormSubmission: () => void;
 };
 
-export default function PetForm({
-  actionType,
-}: TPetFormProps) {
+export default function PetForm({ actionType, onFormSubmission }: TPetFormProps) {
   const { selectedPet } = usePetContext();
 
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,7 +36,13 @@ export default function PetForm({
   //   onFormSubmission();
   // };
   return (
-    <form action={addPet} className="flex flex-col">
+    <form
+      action={async formData => {
+        onFormSubmission();
+        await addPet(formData);
+      }}
+      className="flex flex-col"
+    >
       <div className="space-y-3">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
