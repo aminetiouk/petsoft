@@ -1,11 +1,12 @@
 'use client';
 
 import { usePetContext } from '@/lib/hooks';
-import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { addPet } from '@/actions/actions';
+import PetFormBtn from './pet-form-btn';
+import { toast } from 'sonner';
 
 type TPetFormProps = {
   actionType: 'add' | 'edit';
@@ -39,7 +40,11 @@ export default function PetForm({ actionType, onFormSubmission }: TPetFormProps)
     <form
       action={async formData => {
         onFormSubmission();
-        await addPet(formData);
+        const error = await addPet(formData);
+        if (error) {
+          toast.warning(error.message);
+          return;
+        }
       }}
       className="flex flex-col"
     >
@@ -94,9 +99,8 @@ export default function PetForm({ actionType, onFormSubmission }: TPetFormProps)
           />
         </div>
       </div>
-      <Button type="submit" className="mt-5 self-end">
-        {actionType === 'add' ? 'Add New Pet' : 'Edit Pet'}
-      </Button>
+
+      <PetFormBtn actionType={actionType} />
     </form>
   );
 }
