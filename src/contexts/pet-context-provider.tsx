@@ -1,8 +1,9 @@
 'use client';
 
-import { addPet } from '@/actions/actions';
+import { addPet, editPet } from '@/actions/actions';
 import { TPets } from '@/lib/types';
-import { createContext, useState } from 'react';
+import { createContext, useOptimistic, useState } from 'react';
+import { toast } from 'sonner';
 
 type PetContextProviderProps = {
   data: TPets[];
@@ -22,17 +23,14 @@ type TPetContext = {
 export const petContext = createContext<TPetContext | null>(null);
 
 export default function PetContextProvider({
-  data: pets,
+  data,
   children
 }: PetContextProviderProps) {
+  const [optimisticPets, setOptimisticPets] = useOptimistic(data);
   const [selectedPetId, setSelectedPetId] = useState<string | null>(null);
 
-  const selectedPet = pets.find(pet => pet.id === selectedPetId);
-  const numberOfPets = pets.length;
-
-  const handleCheckoutPet = (id: string) => {
-    pets.filter(pet => pet.id !== id);
-  };
+  const selectedPet = optimisticPets.find(pet => pet.id === selectedPetId);
+  const numberOfPets = optimisticPets.length;
 
   const handleAddNewPet = async (newPet: Omit<TPets, 'id'>) => {
     // setPets(prev => [
@@ -43,21 +41,34 @@ export default function PetContextProvider({
     //   }
     // ]);
 
-    await addPet(newPet);
+    // await addPet(newPet);
+    const error = await addPet(formData);
+    if (error) {
+      toast.warning(error.message);
+      return;
+    }
   };
 
-  const handleEditPet = (petId: string, newPetData: Omit<TPets, 'id'>) => {
-    setPets(prev =>
-      prev.map(pet => {
-        if (pet.id === petId) {
-          return {
-            id: petId,
-            ...newPetData
-          };
-        }
-        return pet;
-      })
-    );
+  const handleEditPet = async (
+    petId: string,
+    newPetData: Omit<TPets, 'id'>
+  ) => {
+    const error = await editPet(selectedPet?.id, formData);
+    if (error) {
+      toast.warning(error.message);
+      return;
+    }
+    // setPets(prev =>
+    //   prev.map(pet => {
+    //     if (pet.id === petId) {
+    //       return {
+    //         id: petId,
+    //         ...newPetData
+    //       };
+    //     }
+    //     return pet;
+    //   })
+    // );
   };
 
   const handleChangeSelectedPetId = (id: string) => {
@@ -73,7 +84,7 @@ export default function PetContextProvider({
         numberOfPets,
         handleCheckoutPet,
         handleAddNewPet,
-        handleEditPet,
+        handleEditPet
       }}
     >
       {children}
