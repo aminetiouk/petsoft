@@ -42,19 +42,19 @@ const TopBar = ({ pet }: TProps) => {
   return (
     <div className="flex items-center px-8 py-5 bg-white border-b border-black/10 ">
       <Image
-        src={pet?.imageUrl}
+        src={pet.imageUrl}
         width={75}
         height={75}
         alt="pet image"
         className="rounded-full object-cover w-[75] h-[75]"
       />
-      <h2 className="text-3xl font-semibold leading-5 ml-4">{pet?.name}</h2>
+      <h2 className="text-3xl font-semibold leading-5 ml-4">{pet.name}</h2>
       <div className="ml-auto space-x-4">
         <PetButton actionType="edit">Edit</PetButton>
         <PetButton
           actionType="checkout"
           disabled={isPending}
-          onClick={async () => await handleCheckoutPet(pet?.id)}
+          onClick={async () => await handleCheckoutPet(pet.id)}
         >
           Checkout
         </PetButton>
