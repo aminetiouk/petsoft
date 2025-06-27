@@ -1,6 +1,6 @@
 'use client';
 
-import { addPet, editPet } from '@/actions/actions';
+import { addPet, deletePet, editPet } from '@/actions/actions';
 import { TPets } from '@/lib/types';
 import { createContext, useOptimistic, useState } from 'react';
 import { toast } from 'sonner';
@@ -13,11 +13,14 @@ type TPetContext = {
   pets: TPets[];
   selectedPetId: string | null;
   selectedPet: TPets | undefined;
-  handleChangeSelectedPetId: (id: string) => void;
-  handleCheckoutPet: (id: string) => void;
   numberOfPets: number;
-  handleAddNewPet: (newPet: Omit<TPets, 'id'>) => void;
-  handleEditPet: (petId: string, newPetData: Omit<TPets, 'id'>) => void;
+  handleChangeSelectedPetId: (id: string) => void;
+  handleCheckoutPet: (id: string) => Promise<void>;
+  handleAddNewPet: (newPet: Omit<TPets, 'id'>) => Promise<void>;
+  handleEditPet: (
+    petId: string,
+    newPetData: Omit<TPets, 'id'>
+  ) => Promise<void>;
 };
 
 export const petContext = createContext<TPetContext | null>(null);
@@ -69,6 +72,11 @@ export default function PetContextProvider({
     //     return pet;
     //   })
     // );
+  };
+
+  const handleCheckoutPet = async (petId: string) => {
+    await deletePet(petId);
+    setSelectedPetId(null);
   };
 
   const handleChangeSelectedPetId = (id: string) => {
