@@ -42,10 +42,17 @@ export default function PetForm({
   return (
     <form
       action={async formData => {
+        const petData = {
+          name: formData.get('name') as string,
+          ownerName: formData.get("ownerName") as string,
+          imageUrl: formData.get("imageUrl") as string || '/placeholder.svg',
+          age: Number(formData.get("age")),
+          notes: formData.get("notes") as string
+        }
         if (actionType === 'add') {
-          handleAddNewPet(formData);
+          handleAddNewPet(petData);
         } else if (actionType === 'edit') {
-          handleEditPet(selectedPet?.id, formData);
+          handleEditPet(selectedPet!.id, petData);
         }
         onFormSubmission();
       }}
