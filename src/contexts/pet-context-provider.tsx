@@ -36,6 +36,12 @@ export default function PetContextProvider({
   const numberOfPets = optimisticPets.length;
 
   const handleAddNewPet = async (newPet: Omit<TPets, 'id'>) => {
+
+    const error = await addPet(newPet);
+    if (error) {
+      toast.warning(error.message);
+      return;
+    }
     // setPets(prev => [
     //   ...prev,
     //   {
@@ -45,18 +51,13 @@ export default function PetContextProvider({
     // ]);
 
     // await addPet(newPet);
-    const error = await addPet(formData);
-    if (error) {
-      toast.warning(error.message);
-      return;
-    }
   };
 
   const handleEditPet = async (
     petId: string,
     newPetData: Omit<TPets, 'id'>
   ) => {
-    const error = await editPet(selectedPet?.id, formData);
+    const error = await editPet(petId, newPetData);
     if (error) {
       toast.warning(error.message);
       return;
@@ -85,7 +86,7 @@ export default function PetContextProvider({
   return (
     <petContext.Provider
       value={{
-        pets,
+        pets: optimisticPets,
         selectedPetId,
         selectedPet,
         handleChangeSelectedPetId,
