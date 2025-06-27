@@ -49,6 +49,7 @@ export async function editPet(petId, formData) {
 }
 
 export async function deletePet(petId) {
+  await sleep(2000);
   try {
     await prisma.pet.delete({
       where: {
