@@ -4,7 +4,6 @@ import { usePetContext } from '@/lib/hooks';
 import { TPets } from '@/lib/types';
 import Image from 'next/image';
 import PetButton from './pet-button';
-import { addPet, deletePet } from '@/actions/actions';
 import { useTransition } from 'react';
 
 export default function PetDetails() {
@@ -55,11 +54,7 @@ const TopBar = ({ pet }: TProps) => {
         <PetButton
           actionType="checkout"
           disabled={isPending}
-          onClick={async () => {
-            startTransition(async () => {
-              await deletePet(pet.id);
-            });
-          }}
+          onClick={async () => await handleCheckoutPet(pet?.id)}
         >
           Checkout
         </PetButton>
