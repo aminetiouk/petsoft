@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Button } from './ui/button';
 import Image from 'next/image';
@@ -11,6 +11,7 @@ import {
 import { DialogTitle } from '@radix-ui/react-dialog';
 import PetForm from './pet-form';
 import { useState } from 'react';
+import { flushSync } from 'react-dom';
 
 type TPetButton = {
   actionType: 'add' | 'edit' | 'checkout';
@@ -57,7 +58,14 @@ export default function PetButton({
             {actionType === 'add' ? 'Add new pet' : 'Edit the pet'}
           </DialogTitle>
         </DialogHeader>
-        <PetForm actionType={actionType} onFormSubmission={() => setIsFormOpen(false)} />
+        <PetForm
+          actionType={actionType}
+          onFormSubmission={() => {
+            flushSync(() => {
+              setIsFormOpen(false);
+            });
+          }}
+        />
       </DialogContent>
     </Dialog>
   );
