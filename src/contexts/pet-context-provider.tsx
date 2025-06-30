@@ -37,7 +37,7 @@ export default function PetContextProvider({
           return [...state, { ...payload, id: Math.random().toString() }];
         case 'edit':
           return state.map(pet => {
-            if (pet.id === payload.id) {
+            if (pet.id === payload.petId) {
               return { ...pet, ...payload.newPetData };
             }
             return pet;
@@ -96,7 +96,12 @@ export default function PetContextProvider({
   };
 
   const handleCheckoutPet = async (petId: string) => {
-    await deletePet({ action: 'delete', payload: petId });
+    setOptimisticPets({ action: 'delete', payload: petId });
+    const error = await deletePet(petId);
+    if (error) {
+      toast.warning(error.message);
+      return;
+    }
     setSelectedPetId(null);
   };
 
