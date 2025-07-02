@@ -1,10 +1,9 @@
 'use client';
 
 import { usePetContext } from '@/lib/hooks';
-import { TPets } from '@/lib/types';
 import Image from 'next/image';
 import PetButton from './pet-button';
-import { useTransition } from 'react';
+import { Pet } from '../../generated/prisma';
 
 export default function PetDetails() {
   const { selectedPet } = usePetContext();
@@ -24,7 +23,7 @@ export default function PetDetails() {
 }
 
 type TProps = {
-  pet: TPets;
+  pet: Pet;
 };
 
 const EmptyView = () => {
@@ -37,7 +36,6 @@ const EmptyView = () => {
 
 const TopBar = ({ pet }: TProps) => {
   const { handleCheckoutPet } = usePetContext();
-  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="flex items-center px-8 py-5 bg-white border-b border-black/10 ">
@@ -53,7 +51,6 @@ const TopBar = ({ pet }: TProps) => {
         <PetButton actionType="edit">Edit</PetButton>
         <PetButton
           actionType="checkout"
-          disabled={isPending}
           onClick={async () => await handleCheckoutPet(pet.id)}
         >
           Checkout
@@ -70,11 +67,11 @@ const OtherDetails = ({ pet }: TProps) => {
         <h3 className="text-[13px] font-medium uppercase text-zinc-700">
           Owner name
         </h3>
-        <p className="mt-1 text-lg text-zinc-800">{pet?.ownerName}</p>
+        <p className="mt-1 text-lg text-zinc-800">{pet.ownerName}</p>
       </div>
       <div>
         <h3 className="text-[13px] font-medium uppercase text-zinc-700">age</h3>
-        <p className="mt-1 text-lg text-zinc-800">{pet?.age}</p>
+        <p className="mt-1 text-lg text-zinc-800">{pet.age}</p>
       </div>
     </div>
   );
@@ -83,7 +80,7 @@ const OtherDetails = ({ pet }: TProps) => {
 const PetNote = ({ pet }: TProps) => {
   return (
     <section className="flex-1 py-5 px-7 mb-8 mx-8 rounded-md bg-white border border-black/10">
-      <p>{pet?.notes}</p>
+      <p>{pet.notes}</p>
     </section>
   );
 };
