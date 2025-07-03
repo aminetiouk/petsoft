@@ -6,6 +6,8 @@ import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import PetFormBtn from './pet-form-btn';
 import { useForm } from 'react-hook-form';
+import * as z from 'zod/v4';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type TPetFormProps = {
   actionType: 'add' | 'edit';
@@ -20,6 +22,25 @@ type TPetForm = {
   notes: string;
 };
 
+const petFormSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, { message: 'Name is required' })
+    .max(100, { message: 'Name must be less than 100 character' }),
+  ownerName: z
+    .string()
+    .trim()
+    .min(1, { message: 'Owner name required' })
+    .max(100),
+  imageUrl: z.union([
+    z.literal(''),
+    z.string().trim().url({ message: 'Image url must be a valid url' })
+  ]),
+  age: z.coerce.number().int().positive().max(100),
+  notes: z.union([z.literal(''), z.string().trim().max(1000)])
+});
+
 export default function PetForm({
   actionType,
   onFormSubmission
@@ -27,8 +48,11 @@ export default function PetForm({
   const { handleAddNewPet, handleEditPet, selectedPet } = usePetContext();
   const {
     register,
+    trigger,
     formState: { errors }
-  } = useForm<TPetForm>();
+  } = useForm<TPetForm>({
+    resolver: zodResolver(petFormSchema),
+  });
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault();
 
@@ -53,6 +77,11 @@ export default function PetForm({
   return (
     <form
       action={async formData => {
+        const result = await trigger();
+        if (!result) return;
+
+        onFormSubmission();
+
         const petData = {
           name: formData.get('name') as string,
           ownerName: formData.get('ownerName') as string,
@@ -65,21 +94,24 @@ export default function PetForm({
         } else if (actionType === 'edit') {
           handleEditPet(selectedPet!.id, petData);
         }
-        onFormSubmission();
       }}
       className="flex flex-col"
     >
       <div className="space-y-3">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
-          <Input id="name" {...register('name', {
-            required: 'Name is required'
-          })} />
+          <Input
+            id="name"
+            {...register('name')}
+          />
           {errors.name && <p className="text-red-500">{errors.name.message}</p>}
         </div>
         <div className="space-y-2">
           <Label htmlFor="ownerName">Owner Name</Label>
-          <Input id="ownerName" {...register('ownerName')} />
+          <Input
+            id="ownerName"
+            {...register('ownerName')}
+          />
           {errors.ownerName && (
             <p className="text-red-500">{errors.ownerName.message}</p>
           )}
