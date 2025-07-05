@@ -1,9 +1,10 @@
-import { petContext } from "@/contexts/pet-context-provider";
+
+import { PetContext } from "@/contexts/pet-context-provider";
 import { searchContext } from "@/contexts/search-context-provider";
 import { useContext } from "react";
 
 export function usePetContext() {
-  const context = useContext(petContext);
+  const context = useContext(PetContext);
   
   if (!context) {
     throw new Error('usePetContext must be used within a PetContextProvider');
