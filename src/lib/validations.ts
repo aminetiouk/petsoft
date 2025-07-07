@@ -20,7 +20,7 @@ export const petFormSchema = z
       .trim()
       .refine(
         val => val === '' || /^https?:\/\/.+/.test(val) || val.startsWith('/'),
-        { message: 'Image URL must be a valid URL or a relative path' }
+        { message: 'Image URL must be a valid URL' }
       ),
     age: z.coerce
       .number()
