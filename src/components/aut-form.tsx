@@ -1,7 +1,8 @@
+import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 
-export default function AutForm() {
+export default function AutForm({auth}: {auth: string}) {
   return (
     <form className='space-y-3'>
       <div className='space-y-2'>
@@ -12,6 +13,8 @@ export default function AutForm() {
         <Label htmlFor="password">Password</Label>
         <Input id="password" type="password" />
       </div>
+
+      <Button>{auth}</Button>
     </form>
   );
 }
