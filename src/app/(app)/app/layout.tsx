@@ -7,8 +7,11 @@ import prisma from '@/lib/prisma';
 import { Toaster } from 'sonner';
 
 export default async function Layout({ children }: { children: string }) {
-  
   const pets = await prisma.pet.findMany();
+  const user = await prisma.user.findUnique({
+    where: { email: 'john@gmail.com' },
+    include: { pets: true}
+  });
   return (
     <main>
       <BackgroundHeader />
@@ -22,7 +25,7 @@ export default async function Layout({ children }: { children: string }) {
 
         <AppFooter />
 
-        <Toaster position='top-right' />
+        <Toaster position="top-right" />
       </div>
     </main>
   );
