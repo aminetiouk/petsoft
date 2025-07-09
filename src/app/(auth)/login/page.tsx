@@ -7,7 +7,7 @@ export default function Login() {
     <main className='space-y-2'>
       <H1 className='mb-4'>Log In</H1>
 
-      <AutForm auth='Log In' />
+      <AutForm type='logIn' />
 
       <p>
         No account yet?{" "}
