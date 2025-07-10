@@ -7,6 +7,12 @@ import { PetEssentials } from '@/lib/types';
 import { Pet } from '../../generated/prisma';
 import { petFormSchema } from '@/lib/validations';
 
+export async function logIn(formData: FormData) {
+  const authData = Object.fromEntries(formData.entries());
+
+  await signIn("credentials", authData);
+}
+
 export async function addPet(pet: PetEssentials) {
   await sleep(1000);
 
