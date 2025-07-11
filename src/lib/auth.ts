@@ -1,10 +1,11 @@
 import NextAuth from 'next-auth';
 import NextAuthConfig from 'next-auth';
+import type { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import prisma from './prisma';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
-const config = {
+const config: NextAuthOptions = {
   pages: {
     signIn: '/login'
   },
@@ -13,7 +14,7 @@ const config = {
       async authorize(credentials) {
         const { email, password } = credentials;
 
-        const user = prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
           where: {
             email
           }
@@ -27,7 +28,13 @@ const config = {
           password,
           user.hashedPassword
         );
-      }
+        if(!passwordsMatch) {
+          console.log("invalid credentials");
+          return null;
+        }
+
+        return user;
+      },
     }) 
   ],
   callbacks: {
@@ -41,6 +48,6 @@ const config = {
       }
     }
   }
-} satisfies NextAuthConfig;
+} satisfies typeof NextAuthConfig;
 
 export const { auth } = NextAuth(config);
